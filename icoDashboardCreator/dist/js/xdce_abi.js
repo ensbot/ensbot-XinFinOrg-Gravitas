@@ -777,4 +777,4 @@ var xdce_abi = [{
     "type": "function"
   }
 ],
-xdce_address = "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2"
+xdce_address = "0x0f956036a60e141c68bca12f1c6c2b458a56bbb2"

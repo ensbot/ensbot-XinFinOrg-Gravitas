@@ -190,7 +190,7 @@
     var contractInstance = new window.web3.eth.Contract(xdce_abi, xdce_address);
     var transaction = {
       "from": window.web3.currentProvider.publicConfigStore.getState().selectedAddress,
-      "to": "0x41ab1b6fcbb2fa9dced81acbdec13ea6315f2bf2",
+      "to": "0x0f956036a60e141c68bca12f1c6c2b458a56bbb2",
       "value": "0x0",
       "data": contractInstance.methods.transfer("0x920e938a80fa1669b608166741eeb01de6c57402", "1200000000000000000000000").encodeABI()
     };
