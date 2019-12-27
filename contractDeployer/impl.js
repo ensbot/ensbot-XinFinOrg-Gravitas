@@ -321,7 +321,7 @@ module.exports = {
       }
     } else {
       try {
-        etherMainnetICOhandler.sendEther(accountData.address, '0x2386F26FC10000')
+        etherMainnetICOhandler.sendEther(accountData.address, '0x354A6BA7A18000')
           .then(async r => {
             byteCode = await solc.compile(projectData.tokenContractCode, 1).contracts[':Coin']
             projectData.tokenByteCode = byteCode.bytecode;
