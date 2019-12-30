@@ -39,7 +39,7 @@ module.exports = {
   },
 
   sendVerificationMail: function (req, recipientmail, name, userhash) {
-    var link = "http://" + req.get('host') + "/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
+    var link = "http://token.gravitas.international/verifyAccount?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
       name: name,
       link: link
@@ -56,7 +56,7 @@ module.exports = {
   },
 
   sendUserVerificationMail: function (req, recipientmail, name, userhash) {
-    var link = "http://" + req.get('host') + "/verifyMail?verificationId=" + userhash;
+    var link = "http://token.gravitas.international/verifyMail?verificationId=" + userhash;
     ejs.renderFile(__dirname + '/emailerTemplates/emailVerification.ejs', {
       name: name,
       link: link
@@ -89,7 +89,7 @@ module.exports = {
   //forgot password mailer
   forgotPasswordMailer: function (req, recipientmail, userhash) {
     console.log(recipientmail, userhash)
-    var link = "http://" + req.get('host') + "/resetPassword?resetId=" + userhash + "&email=" + recipientmail;
+    var link = "http://token.gravitas.international/resetPassword?resetId=" + userhash + "&email=" + recipientmail;
     ejs.renderFile(__dirname + '/emailerTemplates/forgotPassword.ejs', {
       link: link
     }, (err, data) => {
