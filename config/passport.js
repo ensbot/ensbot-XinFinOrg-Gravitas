@@ -241,11 +241,10 @@ module.exports = function (passport) {
 
   // //passpoort strategy for facebook login
   passport.use(new FacebookStrategy(
-    
     {
     clientID : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
-    callbackURL : "https://mycontract.co/auth/facebook/callback",
+    callbackURL : configAuth.facebookAuth.callbackURL,
     // profileURL: 'https://graph.facebook.com/v2.10/me',
     // authorizationURL: 'https://www.facebook.com/v2.10/dialog/oauth',
     // tokenURL: 'https://graph.facebook.com/v2.10/oauth/access_token',

@@ -82,7 +82,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc1:
     {
-      type:DataTypes.STRING
+      type:DataTypes.TEXT
     },
     kycDocName2:
     {
@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc2:
     {
-      type:DataTypes.STRING,
+      type:DataTypes.TEXT,
     },
     kycDocName3:
     {
@@ -98,11 +98,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     kycDoc3:
     {
-      type:DataTypes.STRING
+      type:DataTypes.TEXT,
     },
     paymentOTP:
     {
       type:DataTypes.NUMERIC
+    },
+    refferalId:{
+      type:DataTypes.STRING
     },
     createdAt: {
       allowNull: false,

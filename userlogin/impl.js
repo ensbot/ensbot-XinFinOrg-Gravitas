@@ -40,6 +40,7 @@ module.exports = {
   }),
 
   getDashboard: async function (req, res) {
+
     var projectArray = await getProjectArray(req.user.email);
     // console.log(projectArray);
     var address;
@@ -124,7 +125,7 @@ module.exports = {
     let buffer1 = readChunk.sync((req.files[0].path), 0, 4100);
     let buffer2 = readChunk.sync((req.files[1].path), 0, 4100);
     let buffer3 = readChunk.sync((req.files[2].path), 0, 4100);
-    if (fileType(buffer1).mime == "image/jpeg" && fileType(buffer2).mime == 'image/jpeg' && fileType(buffer3).mime == 'image/jpeg') {
+    if ((fileType(buffer1).mime == "image/jpeg" || fileType(buffer1).mime == "image/png") && (fileType(buffer2).mime == 'image/jpeg'|| fileType(buffer2).mime == 'image/png') && (fileType(buffer3).mime == 'image/jpeg'|| fileType(buffer3).mime == 'image/png')) {
       client.update({
         "name": req.body.first_name + " " + req.body.last_name,
         "isd_code": req.body.ISD_code,

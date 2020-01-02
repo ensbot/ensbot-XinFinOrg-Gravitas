@@ -8,9 +8,9 @@ module.exports = function (app) {
   app.post('/login', impl.postLogin);
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
-  app.get('/dashboard', isLoggedIn, impl.getDashboard);
-  app.get('/profileDetails', isLoggedIn, impl.getProfileDetails);
-  app.get('/faq', isLoggedIn, impl.getFAQ);
+  app.get('/dashboard', isLoggedIn,hasVerified, impl.getDashboard);
+  app.get('/profileDetails', isLoggedIn,hasVerified, impl.getProfileDetails);
+  app.get('/faq', isLoggedIn,hasVerified, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);
   app.get('/auth/google/callback', impl.googleLoginCallback);
   app.get('/logout', impl.getLogout);
@@ -50,5 +50,35 @@ function isLoggedIn(req, res, next) {
   // if they aren't redirect them to the home page
   res.redirect('/');
 
+}
+
+//for kyc status verification
+function hasVerified(req, res, next) {
+  client.find({
+    where: {
+      'email': req.user.email
+    }
+  }).then(result => {
+    switch (result.dataValues.kyc_verified) {
+      case "active":
+        { next(); }
+        break;
+      case "pending":
+        {
+          req.flash('info','Your KYC is in pending state.')
+           res.redirect('/KYCpage/pending');
+           }
+        break;
+      case "notInitiated":
+        {
+          req.flash('error','Your have to first complete your KYC.') 
+          res.redirect('/KYCpage');
+         }
+        break;
+      default:
+        { res.redirect('/'); }
+        break;
+    }
+  })
 }
 
