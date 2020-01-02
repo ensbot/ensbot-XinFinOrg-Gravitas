@@ -15,7 +15,7 @@ module.exports = {
   'facebookAuth' : {
     'clientID'      : '2066165943513650', // your App ID
     'clientSecret'  : 'e27f34bd84ea85c510745e12e065e36a', // your App Secret
-    'callbackURL'   : 'http://token.gravitas.international//auth/facebook/callback'
+    'callbackURL'   : 'http://token.gravitas.international/auth/facebook/callback'
 },
 
   'nodemailerAuth': {
