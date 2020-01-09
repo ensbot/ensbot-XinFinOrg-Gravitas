@@ -9,6 +9,7 @@ module.exports = function (app) {
   app.get('/signup', impl.getSignup);
   app.post('/signup', impl.postSignup);
   app.get('/dashboard', isLoggedIn,hasVerified, impl.getDashboard);
+  app.get('/referralearnings',isLoggedIn,hasVerified,impl.getReferralEarnings);
   app.get('/profileDetails', isLoggedIn,hasVerified, impl.getProfileDetails);
   app.get('/faq', isLoggedIn,hasVerified, impl.getFAQ);
   app.get('/auth/google', impl.googleLogin);

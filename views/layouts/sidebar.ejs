@@ -63,7 +63,7 @@
               <!-- dark Logo text -->
               <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
               <!-- Light Logo text -->
-              
+
             </span>
           </a>
           <!-- End Logo -->
@@ -85,11 +85,11 @@
                 <img src="assets/images/icons/token.png"> Gravitas Tokens: <span id="xdce">0000</span>
               </div>
             </li>
-            <li class="">
+            <!-- <li class="">
               <div class="header-price-box ethBalance">
                 <img src="assets/images/icons/eth.png"> ETH Balance: <span id="eth">0000</span>
               </div>
-            </li>
+            </li> -->
             <li class="">
               <div class="header-buy-tokens">
                 <button type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#exampleModal"
@@ -179,30 +179,35 @@
               </ul>
             </li>
             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
-              href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deployed
-                 Contracts </span></a>
-            <ul aria-expanded="false" class="collapse first-level">
-              <% if (ProjectConfiguration.length>0) { %>
-              <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
-              <%  if(ProjectConfiguration.tokenContractAddress != 'Deployment is in process') {%>
-              <!-- <li class="sidebar-item"><a href="/generatedContract"
+                href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span
+                  class="hide-menu">Deployed
+                  Contracts </span></a>
+              <ul aria-expanded="false" class="collapse first-level">
+                <% if (ProjectConfiguration.length>0) { %>
+                <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
+                <%  if(ProjectConfiguration.tokenContractAddress != 'Deployment is in process') {%>
+                <!-- <li class="sidebar-item"><a href="/generatedContract"
                       class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
-              <li id="deployment" onclick='getExplorerURL( "<%- ProjectConfiguration.networkType %>","<%- ProjectConfiguration.tokenContractAddress %>")'
-                class="sidebar-item"><a href="javascript:void(0)" target="_blank" class="sidebar-link"><i
-                    class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
-              </li>
-              <% }else{%>
-              <% } %>
-              <% }) %>
-              <% } else { %>
-              <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
-                    class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet </span></a></li>
-              <% } %>
-            </ul>
-          </li>
+                <li id="deployment"
+                  onclick='getExplorerURL( "<%- ProjectConfiguration.networkType %>","<%- ProjectConfiguration.tokenContractAddress %>")'
+                  class="sidebar-item"><a href="javascript:void(0)" target="_blank" class="sidebar-link"><i
+                      class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
+                </li>
+                <% }else{%>
+                <% } %>
+                <% }) %>
+                <% } else { %>
+                <li class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
+                      class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet </span></a></li>
+                <% } %>
+              </ul>
+            </li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" data-toggle="modal"
                 data-target="#exampleModal" data-whatever="@getbootstrap"><i class="ti-wallet"></i><span
                   class="hide-menu">Buy Tokens </span></a></li>
+
+            <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/referralearnings"><i class="ti-wallet"></i><span
+                  class="hide-menu">Referral Earnings </span></a></li>
             <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/logout"
                 aria-expanded="false"><i class="fa fa-power-off"></i><span class="hide-menu">Log Out </span></a></li>
           </ul>
@@ -268,11 +273,11 @@
       </div>
     </div>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
-<% if (typeof req != 'undefined') { %>
-  <%- req.toastr.render() %>
-  <% } %>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+    <% if (typeof req != 'undefined') { %>
+    <%- req.toastr.render() %>
+    <% } %>
     <!-- footer -->
     <footer class="footer text-center">Copyright © 2019 Gravitas International. All rights reserved.</footer>
     <!-- End footer -->
@@ -300,6 +305,7 @@
     <!-- Toastr alert -->
     <script>
       var globalEthBalance;
+
       function checkBalances() {
         $.get('/getBalances', function (result) {
           balance = result["XDCE"];
@@ -313,35 +319,39 @@
       window.setInterval(function () {
         checkBalances();
       }, 30000);
+
       function deploy(coinName, istoken) {
         console.log(coinName, "here")
         window.sessionStorage.setItem("deploymentName", coinName);
-        if (!istoken) { window.location.href = "/deployer"; }
-        else { window.location.href = "/deployer?coinName=" + coinName; }
+        if (!istoken) {
+          window.location.href = "/deployer";
+        } else {
+          window.location.href = "/deployer?coinName=" + coinName;
+        }
       }
-      function getExplorerURL(networkType,tokenContractAddress) {
-        console.log(networkType,tokenContractAddress, "here")
-        if (networkType="apothem"){
+
+      function getExplorerURL(networkType, tokenContractAddress) {
+        console.log(networkType, tokenContractAddress, "here")
+        if (networkType = "apothem") {
           window.location.href = "https://explorer.apothem.network/token/xdc" + tokenContractAddress.substring(2)
-        }
-        else if (networkType="mainnet"){
+        } else if (networkType = "mainnet") {
           window.location.href = "https://explorer.xinfin.network/token/xdc" + tokenContractAddress.substring(2)
-        }
-        else if (networkType="testnet"){
+        } else if (networkType = "testnet") {
           window.location.href = "https://ropsten.etherscan.io/token/" + tokenContractAddress
-        }
-        else {
+        } else {
           window.location.href = "https://etherscan.io/token/" + tokenContractAddress
         }
         // window.sessionStorage.setItem("deploymentName", coinName);
         // if (!istoken) { window.location.href = "/deployer"; }
         // else { window.location.href = "/deployer?coinName=" + coinName; }
       }
+
       function autoDeploy(coinName, istoken, isMainnet) {
         console.log(istoken, "is here", isMainnet)
         window.sessionStorage.setItem("deploymentName", coinName);
-        if (!istoken) { window.location.href = "/deployer"; }
-        else {
+        if (!istoken) {
+          window.location.href = "/deployer";
+        } else {
           console.log('in here ')
           if (isMainnet == '1') {
             console.log('in here 1')
@@ -354,26 +364,23 @@
           } else if (isMainnet == '2') {
             console.log('in here 2')
             window.location.href = "/api/automaticDeployment?network=testnet&coinName=" + coinName;
-          }
-          else if(isMainnet =='3') {
+          } else if (isMainnet == '3') {
             console.log('in here 3')
             window.location.href = "/api/automaticDeployment?network=mainnet&coinName=" + coinName;
-          }
-          else{
+          } else {
             console.log('in here 4')
             window.location.href = "/api/automaticDeployment?network=apothem&coinName=" + coinName;
           }
         }
       }
-        // function getProjectArray(){
-        //   $.get('/getProjectArray', function(result){
-        //       if(result){
-        //         console.log(result['projectArray']);
-        //         new EJS({url: 'profile.ejs'}).update('ProjectConfiguration', result['projectArray']);
-        //       }
-        //     });
-        // }
-
+      // function getProjectArray(){
+      //   $.get('/getProjectArray', function(result){
+      //       if(result){
+      //         console.log(result['projectArray']);
+      //         new EJS({url: 'profile.ejs'}).update('ProjectConfiguration', result['projectArray']);
+      //       }
+      //     });
+      // }
     </script>
 
     <!-- slimscrollbar JavaScript -->
@@ -387,10 +394,10 @@
     <script src="assets/js/custom.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/css/toastr.min.css">
-<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>   
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
     <script>
-        toastr.options = {
+      toastr.options = {
         "closeButton": false,
         "debug": false,
         "newestOnTop": false,
@@ -406,5 +413,5 @@
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
-    }
-   </script>
+      }
+    </script>

@@ -37,23 +37,17 @@
                         </div>
                         <div class="bottom">
                           <div class="cl-footer">
-                            <div class="dolar">1200000 <img src="assets/images/icons/token.png" width="25" height="25">
+                            <div class="dolar"><%= packages.amount %> <img src="assets/images/icons/token.png" width="25" height="25">
                             </div>
-                            <% if(balance<1200000) { %>
+                            <% if(balance < packages.amount ) { %>
                             <h5> Your balance is insufficient. Please recharge your address with Gravitas Token </h5>
+                            <button type="button" class="btn btn-rounded btn-info" data-toggle="modal" data-target="#exampleModal"
+                  data-whatever="@getbootstrap"><i class="fa fa-plus-circle"></i> Buy</button>
                             <% } else { %>
                             <a data-toggle="modal" data-target="#paymentConfirmationModal" data-whatever="@getbootstrap"
                               class="btn-table btn-rounded btn-1 hvr-sweep-to-right" onclick="sendOTP()">Buy Now</a>
                             <% } %>
                           </div>
-                          <div class="bancor-wc" style="display:block" id="bancor-wc-id-1"></div>
-                          <div id="metamaskButton" style="display:none">
-                            <br>
-                            <h5> You seem to be using Metamask wallet </h5>
-                            <a data-whatever="@getbootstrap" class="btn btn-rounded btn-lg btn-info mr-1"
-                              onclick="buyMetamask()">Buy
-                              Using Metamask</a><br><br>
-                      </div>
                         </div>
                       </div>
                     </div>

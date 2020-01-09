@@ -1,6 +1,7 @@
 var passport = require('passport');
 var db = require('../database/models/index');
 var client = db.client;
+var referralLogs = db.referralLogs;
 var ProjectConfiguration = db.projectConfiguration;
 // var fs = require('fs');
 var path = require('path');
@@ -76,6 +77,40 @@ module.exports = {
         contractMessage: req.flash('contract_flash'),
         address: address
       });
+    }
+  },
+
+  //for getting records of referral earnings 
+  getReferralEarnings : async function (req,res){
+    try{
+      let email = req.user.email;
+      var projectArray = await getProjectArray(req.user.email);
+      var address;
+    address = req.cookies['address'];
+      var referralRecord = await referralLogs.findAll({
+        where:{
+          'referralEmail':email
+        }
+      });
+
+      if(referralRecord){
+        console.log("referalRecord",referralRecord);
+        data = referralRecord;
+      }else{
+        data = [];
+      }
+      res.render('referralEarnings.ejs',{
+        req:req,
+        user: req.user,
+        ProjectConfiguration: projectArray,
+        data:data,
+        message: req.flash('package_flash'),
+        contractMessage: req.flash('contract_flash'),
+        address: address
+      });
+    }catch(exception){
+      console.log("exception in referralearnings",exception);
+      res.render('error');
     }
   },
 

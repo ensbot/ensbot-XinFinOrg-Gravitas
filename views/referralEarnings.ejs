@@ -1,0 +1,98 @@
+<body>
+    <% layout('./layouts/sidebar') -%>
+  
+      <!-- Preloader -->
+      <div class="preloader">
+        <div class="lds-ripple">
+          <div class="lds-pos"></div>
+          <div class="lds-pos"></div>
+        </div>
+      </div>
+      <!-- Page wrapper  -->
+      <div class="page-wrapper">
+  
+        <!-- Container fluid  -->
+        <div class="container-fluid">
+              <div class="card" style="min-height:500px;">
+                <div class="card-body">
+  
+  
+                  <h4 class="card-title text-center">Referral Earning Details</h4>
+                  <hr size="5">
+                  <div class="row mt-5">
+                    <div class="col-md-12">
+                      <% if(data.length >0 ) {%>
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead class="bg-info-table">
+                              <tr>
+                                <th>Token Name</th>
+                                <th>Referral Email</th>
+                                <th>Referred Email</th>
+                                <th>Referral Amount</th>
+                                <th>Referred Amount</th>
+                                <th>status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% data.forEach(function(ref){ %>
+                                <tr>
+                                  <td>
+                                    <%= ref.tokenName %>
+                                  </td>
+                                  <td>
+                                    <%= ref.referralEmail %>
+                                  </td>
+                                  <td>
+                                    <%= ref.referredEmail %>
+                                  </td>
+                                  <td>
+                                    <%= ref.referralAmount %>
+                                  </td>
+                                  <td>
+                                    <%= ref.referredAmount %>
+                                  </td>
+                                  <% if(ref.status == true) {%>
+                                    <td>
+                                        Received
+                                      </td>
+                                    <% } else { %>
+                                        <td>
+                                            Pending
+                                        </td>
+                                        <% } %> 
+                                  
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                          </table>
+                        </div>
+                        <% } else { %>
+                          <h3 class="text-center">No Referral earnings Yet.</h3>
+                          <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+        </div>
+      </div>
+      </div>
+  
+      </div>
+      <!-- End Container fluid  -->
+  
+  
+      </div>
+      <!-- End Page wrapper  -->
+  
+      </div>
+      <!-- End Wrapper -->
+  
+  
+  
+      <div class="chat-windows"></div>
+      
+  
+  </body>
+  </html>

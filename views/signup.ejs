@@ -129,6 +129,12 @@
                           <p id="length" class="invalid">Minimum <b>8 characters</b></p>
                           <p id="passwordcheck" class="invalid">Password should be<b> same in both fields</b></p>
                         </div>
+
+                        <div class="form-group">
+                          <label for="referralCode">Referal Code (optional)</label>
+                          <input type="text" class="form-control" id="referralCode" name="referralCode"
+                            placeholder="Enter the Referal Code">
+                        </div>
                         <div class="form-group">
                           <div class="row align-items-center">
                             <div class="col-md-12 p-b-20">
@@ -137,7 +143,7 @@
                           </div>
                         </div>
 
-                        <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR continue with</span>
+                        <!-- <p class="line-on-side text-muted text-center font-small-3 mx-2"><span>OR continue with</span>
                         </p>
 
                         <div class="row full-width">
@@ -155,7 +161,7 @@
 
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="form-group m-b-0 m-t-15">
                           <div class="col-sm-12">
                             Already have an account? <a href="/login" class="text-info m-l-5"><b>Login</b></a>
@@ -248,7 +254,7 @@
           retypePassword: {
             required: true,
             equalTo: '#password'
-          }
+          },
         },
         // Specify validation error messages
         messages: {
@@ -256,7 +262,7 @@
             required: "Please provide a password",
             minlength: "Your password must be at least 5 characters long"
           },
-          email: "Please enter a valid email address"
+          email: "Please enter a valid email address",
         },
         // Make sure the form is submitted to the destination defined
         // in the "action" attribute of the form when valid

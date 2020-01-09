@@ -8,6 +8,8 @@ var path = require('path');
 var db = require('../database/models/index');
 var client = db.client;
 var User = db.user;
+var referralLogs = db.referralLogs;
+var packages = db.packages;
 var Address = db.userCurrencyAddress;
 var Transactions = db.icotransactions;
 var Project = db.projectConfiguration;
@@ -163,9 +165,10 @@ module.exports = function (passport) {
     passwordField: 'password',
     passReqToCallback: true // allows us to pass back the entire request to the callback
   },
-    function (req, email, password, done) {
+    async function (req, email, password, done) {
       process.nextTick(function () {
         // find a user whose email is the same as the forms email
+        var referralStatus = 0;
         client.find({
           where: {
             'email': email
@@ -184,6 +187,19 @@ module.exports = function (passport) {
             newUser.password = generateHash(password);
             newUser.status = false;
             newUser.package1 = 1 ;
+            if(req.body.referralCode != null && req.body.referralCode != ''){
+              referralId = req.body.referralCode;
+              var referralUser = await client.find({
+                where:{
+                  'referralId':referralId,
+                }
+              });
+              if(referralUser){
+                referralStatus = 1;
+              }else{
+                return done(null, false, req.flash('signupMessage', 'Referral Id  is wrong.'));
+              }
+            }
             Promise.all([generateEthAddress(), createNewClient(req)]).then(([createdEthAddress, createdClient]) => {
               createdClient.addUserCurrencyAddress(createdEthAddress);
               //activation email sender
@@ -372,17 +388,72 @@ function createNewUser(req) {
   });
 }
 
+function referralCode(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
-function createNewClient(req) {
+async function getReferralObject(referralId){
+  try{
+    var referralUser = await client.find({
+      where:{
+        'referralId':referralId,
+      }
+    });
+    return referralUser;
+  }catch(exception){
+    return 'error';
+  }
+}
+
+async function getPackage(){
+  try{
+    var packagesObject = await packages.findOne({order:[['createdAt','DESC']]});
+    console.log("packages object",packagesObject.currencyName);
+    return packagesObject;
+
+  }catch(exception){
+    console.log("exception",exception);
+    return 'error';
+  }
+  
+}
+async function createNewClient(req) {
   return new Promise(async function (resolve, reject) {
     var newUser = new Object();
     // set the user's local credentials
+    var referralId = req.body.referralCode;
+    if(referralId != null && referralId != ""){
+      newUser.referredId = referralId;
+    }
+    newUser.referralId = referralCode(9);
     newUser.email = req.body.email;
     newUser.password = generateHash(req.body.password);
     var createdClient = await client.create(newUser);
+    if(referralId != null && referralId != "null"){
+      
+      var packages = await getPackage();
+      referralEmail = await getReferralObject(referralId);
+      if(packages != 'error' && referralEmail != 'error'){
+        var referralObject = new Object();
+        referralObject.tokenName = packages.currencyName;
+        referralObject.referralEmail = referralEmail.email;
+        referralObject.referredEmail = req.body.email;
+        referralObject.referralAmount = packages.referralAmount;
+        referralObject.referredAmount = packages.referredAmount;
+        referralObject.status = false;
+        var createdReferralLogs = await referralLogs.create(referralObject);
+      }
+    }
     resolve(createdClient);
   });
 }
+
 
 function sendVerificationMail(req, userEmail, userName, userHash) {
   var nodemailerservice = require('../emailer/impl');

@@ -104,7 +104,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       type:DataTypes.NUMERIC
     },
-    refferalId:{
+    referralId:{
+      type:DataTypes.STRING
+    },
+    referredId:{
       type:DataTypes.STRING
     },
     createdAt: {

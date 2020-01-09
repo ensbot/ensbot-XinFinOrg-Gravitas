@@ -109,6 +109,7 @@ module.exports = {
   },
 
   checkBalance: (address) => {
+    console.log("ExAdress",address);
     return new Promise(function (resolve, reject) {
       contractInstance.methods.balanceOf(address).call().then(balance => {
         resolve(balance / 10 ** 18);

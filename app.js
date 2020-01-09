@@ -137,8 +137,10 @@ app.use(function (err, req, res, next) {
 });
 
 var db = require('./database/models/index');
-db.sequelize.sync({force:true}).then(() => {
+db.sequelize.sync({force:false,logging:console.log}).then(() => {
   console.log("Sync done");
+}).catch(err => {
+  console.log(err);
 });
 // require('./coinPayments/impl');
 module.exports = app;
