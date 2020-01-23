@@ -9,10 +9,10 @@ module.exports = function (app, express) {
   app.get('/contractInteraction/project/:projectName', isLoggedIn, impl.contractInteraction);
   app.get('/contractInteraction/project/:projectName/contractData', impl.contractData);
 
-  app.get('/icoDashboard/icoDashboardSetup/project/:projectName', isLoggedIn, , hasPackage3, impl.icoDashboardSetup);
-  app.get('/icoDashboard/siteConfiguration/project/:projectName', isLoggedIn, , impl.siteConfiguration);
-  app.get('/icoDashboard/siteConfiguration/project/:projectName/getSiteConfiguration', , isLoggedIn, impl.getSiteConfiguration);
-  app.post('/icoDashboard/siteConfiguration/project/:projectName/updateSiteConfiguration',, isLoggedIn, impl.updateSiteConfiguration)
+  app.get('/icoDashboard/icoDashboardSetup/project/:projectName', isLoggedIn,  hasPackage3, impl.icoDashboardSetup);
+  app.get('/icoDashboard/siteConfiguration/project/:projectName', isLoggedIn,  impl.siteConfiguration);
+  app.get('/icoDashboard/siteConfiguration/project/:projectName/getSiteConfiguration',  isLoggedIn, impl.getSiteConfiguration);
+  app.post('/icoDashboard/siteConfiguration/project/:projectName/updateSiteConfiguration',isLoggedIn, impl.updateSiteConfiguration)
   app.post('/icoDashboard/transaction/project/:projectName/tokenTrasfer',isLoggedIn,impl.tokenTrasfer)
   app.post('/icoDashboard/project/:projectName/updateColor',impl.updateColor)
 
@@ -66,7 +66,7 @@ function hasPackage3(req, res, next) {
   })
 }
 
-function (req, res, next) {
+function hasverified(req, res, next) {
   client.find({
     where: {
       'email': req.user.email
