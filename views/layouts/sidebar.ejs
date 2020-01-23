@@ -156,15 +156,14 @@
               </ul>
             </li>
             <!-- <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="authentication-login1.html" aria-expanded="false"><i class="fa fa-calendar-check"></i><span class="hide-menu">Ongoing Projects </span></a></li> -->
-            <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
+            <!-- <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
                 href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span class="hide-menu">Deploy
                   Pending Contracts </span></a>
               <ul aria-expanded="false" class="collapse first-level">
                 <% if (ProjectConfiguration.length>0) { %>
                 <% ProjectConfiguration.forEach(function(ProjectConfiguration){ %>
                 <%  if(ProjectConfiguration.tokenContractAddress == 'Deployment is in process' && ProjectConfiguration.tokenContractAddress == 'null') {%>
-                <!-- <li class="sidebar-item"><a href="/generatedContract"
-                        class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"><%= ProjectConfiguration.coinName %></span></a></li> -->
+                
                 <li id="deployment" onclick='deploy( "<%- ProjectConfiguration.coinName %>",false)'
                   class="sidebar-item"><a href="javascript:void(0)" class="sidebar-link"><i
                       class="mdi mdi-adjust"></i><span class="hide-menu"><%- ProjectConfiguration.coinName %></span></a>
@@ -177,7 +176,7 @@
                       class="mdi mdi-adjust"></i><span class="hide-menu">No Projects Yet </span></a></li>
                 <% } %>
               </ul>
-            </li>
+            </li> -->
             <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link"
                 href="javascript:void(0)" aria-expanded="false"><i class="fa fa-cog"></i><span
                   class="hide-menu">Deployed

@@ -5,7 +5,6 @@ var client = db.client;
 var paymentListener = require('./paymentListener');
 var auth = require('../config/auth')
 var ProjectConfiguration = db.projectConfiguration;
-var packages = db.packages;
 var Address = db.userCurrencyAddress;
 var otpMailer = require("../emailer/impl");
 var paypal = require('paypal-rest-sdk');
@@ -15,21 +14,18 @@ paypal.configure(auth.paypal);
 module.exports = {
   buyPackage: async function (req, res) {
     var projectArray = await getProjectArray(req.user.email);
-    var packagesObj = await packages.find();
     var address = req.cookies['address'];
     var otpExist = false;
     if (req.user.paymentOTP) {
        otpExist = true 
       }
     Promise.all([paymentListener.checkBalance(address)]).then(([balance]) => {
-      console.log("balance",balance);
       res.render('buyPackage', {
         user: req.user,
         client: req.user,
         address: address,
         balance: balance,
         ProjectConfiguration: projectArray,
-        packages:packagesObj,
         otpField: otpExist,
       });
     });

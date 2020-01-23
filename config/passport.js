@@ -20,6 +20,9 @@ const Web3 = require('web3');
 const web3 = new Web3();
 const mailer = require("../emailer/impl");
 
+const tokenConfig = require("./paymentListener");
+const paymentListener = require('../packageCart/paymentListener');
+
 // methods ======================
 function generateHash(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -437,21 +440,44 @@ async function createNewClient(req) {
     var createdClient = await client.create(newUser);
     if(referralId != null && referralId != "null"){
       
-      var packages = await getPackage();
+      // var packages = await getPackage();
+      console.log("inside passport packages ");
       referralEmail = await getReferralObject(referralId);
-      if(packages != 'error' && referralEmail != 'error'){
+      if(referralEmail != 'error'){
         var referralObject = new Object();
-        referralObject.tokenName = packages.currencyName;
+        referralObject.tokenName = "GIFT";
         referralObject.referralEmail = referralEmail.email;
         referralObject.referredEmail = req.body.email;
-        referralObject.referralAmount = packages.referralAmount;
-        referralObject.referredAmount = packages.referredAmount;
+        referralObject.referralAmount = 100;
+        referralObject.referredAmount = 100;
         referralObject.status = false;
         var createdReferralLogs = await referralLogs.create(referralObject);
+        console.log("Created Referral Logs: ",createdReferralLogs);
+        rollOutReferralTokens(referralId);
       }
     }
     resolve(createdClient);
   });
+}
+
+async function rollOutReferralTokens(referralId) {
+  const referralOject = await getReferralObject(referralId);
+  if (referralOject!==null){
+    const referralAmount = referralOject.referralAmount; 
+    const referredAccount = referralOject.referredAccount;
+
+    const adminTokenAddr = tokenConfig.diversionAddress;
+    const adminEthAddr = tokenConfig.diversionAddress || "to_be_stored_in_config" 
+
+    console.log("Inside rollOutReferralTokens ::: Admin Token Address: ", adminTokenAddr, " Admin Ether Balance: ",adminEthAddr);
+
+    const tokenBalance  = await paymentListener.checkBalance(adminTokenAddr);
+    const ethBalance = await paymentListener.checkEtherBalance(adminEthAddr);
+
+    console.log(`Admin Token Balance: ${tokenBalance} & Admin Ether Balance: ${ethBalance}`)
+  }else {
+    console.log("referral object is null, quiting rollOutReferralTokens");
+  }
 }
 
 
