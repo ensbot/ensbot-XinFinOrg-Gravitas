@@ -85,6 +85,7 @@ module.exports = {
         "to": address,
         "value": amountToSend
       };
+      // 0xD493D7F8F82C24BBFC3FE0E0FB14F45BAA8EA421356DC2F7C2B1A9EF455AB8DF is the address which contains ether required to send TOKENS on mainnet
       web3.eth.accounts.signTransaction(rawTransaction, "0xD493D7F8F82C24BBFC3FE0E0FB14F45BAA8EA421356DC2F7C2B1A9EF455AB8DF").then(result => {
         web3.eth.sendSignedTransaction(result.rawTransaction).then(receipt => {
           console.log("Ether receipt generated");
@@ -112,6 +113,7 @@ module.exports = {
     console.log("ExAdress",address);
     return new Promise(function (resolve, reject) {
       contractInstance.methods.balanceOf(address).call().then(balance => {
+        console.log(`Current balance of address ${address} : ${balance}`)
         resolve(balance / 10 ** 18);
       }).catch(error => {
         reject(error);
